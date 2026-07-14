@@ -1,0 +1,110 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: seaweed_gateway
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 12345
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./docker/postgres/init-multiple-dbs.sql:/docker-entrypoint-initdb.d/init-multiple-dbs.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d seaweed_gateway"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  gateway:
+    build: .
+    env_file: .env
+    environment:
+      SERVICE_NAME: gateway
+      POSTGRES_DB: seaweed_gateway
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+    command: >
+      sh -c "python manage.py migrate &&
+      gunicorn seaweed_system.wsgi:application --bind 0.0.0.0:8000"
+
+  farmers-service:
+    build: .
+    env_file: .env
+    environment:
+      SERVICE_NAME: farmers
+      POSTGRES_DB: seaweed_farmers
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "8001:8000"
+    command: >
+      sh -c "python manage.py migrate &&
+      gunicorn seaweed_system.wsgi:application --bind 0.0.0.0:8000"
+
+  production-service:
+    build: .
+    env_file: .env
+    environment:
+      SERVICE_NAME: production
+      POSTGRES_DB: seaweed_production
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "8002:8000"
+    command: >
+      sh -c "python manage.py migrate &&
+      gunicorn seaweed_system.wsgi:application --bind 0.0.0.0:8000"
+
+  inventory-service:
+    build: .
+    env_file: .env
+    environment:
+      SERVICE_NAME: inventory
+      POSTGRES_DB: seaweed_inventory
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "8003:8000"
+    command: >
+      sh -c "python manage.py migrate &&
+      gunicorn seaweed_system.wsgi:application --bind 0.0.0.0:8000"
+
+  market-service:
+    build: .
+    env_file: .env
+    environment:
+      SERVICE_NAME: market
+      POSTGRES_DB: seaweed_market
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "8004:8000"
+    command: >
+      sh -c "python manage.py migrate &&
+      gunicorn seaweed_system.wsgi:application --bind 0.0.0.0:8000"
+
+  reports-service:
+    build: .
+    env_file: .env
+    environment:
+      SERVICE_NAME: reports
+      POSTGRES_DB: seaweed_reports
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "8005:8000"
+    command: >
+      sh -c "python manage.py migrate &&
+      gunicorn seaweed_system.wsgi:application --bind 0.0.0.0:8000"
+
+volumes:
+  postgres_data:
