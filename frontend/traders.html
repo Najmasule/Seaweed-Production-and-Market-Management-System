@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Seaweed MS — Traders</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%8A%3C/text%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link rel="stylesheet" href="./css/styles.css" />
+    <link rel="stylesheet" href="./css/dashboard.css" />
+    <link rel="stylesheet" href="./css/responsive.css" />
+  </head>
+  <body>
+    <div class="app-content">
+      <main class="page-content">
+        <div class="page-header">
+          <div><h1>Traders</h1><p>Manage trader profiles and view transactions</p></div>
+          <div class="page-header-actions">
+            <button class="btn btn-primary" id="add-trader-btn"><i class="fa-solid fa-user-plus"></i> Add Trader</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body" style="padding-bottom:0">
+            <div class="filter-bar">
+              <div class="search-box"><i class="fa-solid fa-magnifying-glass"></i><input type="search" id="search-input" placeholder="Search traders by name, company, contact…" aria-label="Search traders" /></div>
+              <select class="filter-select" id="status-filter" aria-label="Filter by status"><option value="">All Status</option><option value="active">Active</option><option value="inactive">Inactive</option></select>
+              <button class="btn btn-ghost btn-sm" id="clear-filters"><i class="fa-solid fa-xmark"></i> Clear</button>
+            </div>
+          </div>
+          <div class="table-wrapper" id="traders-table"><div class="spinner-center"><span class="spinner spinner-lg"></span></div></div>
+          <div class="pagination-wrapper" id="pagination"></div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Add/Edit Trader Modal -->
+    <div class="modal-overlay" id="trader-modal" aria-hidden="true">
+      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="trader-modal-title">
+        <div class="modal-header"><h3 class="modal-title" id="trader-modal-title">Add Trader</h3><button class="modal-close" data-close="trader-modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button></div>
+        <form id="trader-form"><div class="modal-body">
+          <input type="hidden" id="trader-id" />
+          <div class="form-row">
+            <div class="form-group"><label class="form-label" for="trader-name">Contact Name <span class="req">*</span></label><input type="text" id="trader-name" required /></div>
+            <div class="form-group"><label class="form-label" for="trader-company">Company Name</label><input type="text" id="trader-company" /></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label class="form-label" for="trader-phone">Phone <span class="req">*</span></label><input type="text" id="trader-phone" required /></div>
+            <div class="form-group"><label class="form-label" for="trader-email">Email</label><input type="email" id="trader-email" /></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label class="form-label" for="trader-location">Location</label><input type="text" id="trader-location" /></div>
+            <div class="form-group"><label class="form-label" for="trader-status">Status</label><select id="trader-status"><option value="active">Active</option><option value="inactive">Inactive</option></select></div>
+          </div>
+          <div class="form-group"><label class="form-label" for="trader-address">Address</label><textarea id="trader-address" rows="2"></textarea></div>
+        </div>
+        <div class="modal-footer"><button type="button" class="btn btn-ghost" data-close="trader-modal">Cancel</button><button type="submit" class="btn btn-primary" id="trader-save-btn"><i class="fa-solid fa-save"></i> Save</button></div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Trader Profile Modal -->
+    <div class="modal-overlay" id="trader-profile-modal" aria-hidden="true">
+      <div class="modal modal-large" role="dialog" aria-modal="true" aria-labelledby="trader-profile-title">
+        <div class="modal-header"><h3 class="modal-title" id="trader-profile-title">Trader Profile</h3><button class="modal-close" data-close="trader-profile-modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button></div>
+        <div class="modal-body" id="trader-profile-body"></div>
+      </div>
+    </div>
+
+    <script type="module" src="./js/app.js"></script>
+    <script type="module" src="./js/traders.js"></script>
+  </body>
+</html>

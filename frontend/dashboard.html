@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Seaweed MS — Dashboard</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%8A%3C/text%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link rel="stylesheet" href="./css/styles.css" />
+    <link rel="stylesheet" href="./css/dashboard.css" />
+    <link rel="stylesheet" href="./css/responsive.css" />
+  </head>
+  <body>
+    <div class="app-content">
+      <main class="page-content">
+        <div class="page-header">
+          <div>
+            <h1>Dashboard</h1>
+            <p>Overview of your seaweed production and market operations</p>
+          </div>
+          <div class="page-header-actions">
+            <button class="btn btn-ghost" id="refresh-dashboard"><i class="fa-solid fa-rotate"></i> Refresh</button>
+            <a href="reports.html" class="btn btn-primary"><i class="fa-solid fa-file-chart-column"></i> View Reports</a>
+          </div>
+        </div>
+
+        <!-- Inventory alert strip -->
+        <div class="alert-strip hidden" id="low-stock-alert">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+          <span><strong id="alert-count">0</strong> inventory items are running low. <a href="inventory.html" style="color:var(--primary-700);font-weight:600;">Review inventory →</a></span>
+        </div>
+
+        <!-- Summary stat cards -->
+        <div class="stats-grid" id="stats-grid">
+          <div class="stat-card">
+            <div class="stat-card-header">
+              <div class="stat-icon"><i class="fa-solid fa-tractor"></i></div>
+              <span class="stat-trend up"><i class="fa-solid fa-arrow-up"></i> <span id="farmers-trend">—</span></span>
+            </div>
+            <div class="stat-value" id="stat-farmers">—</div>
+            <div class="stat-label">Total Farmers</div>
+          </div>
+          <div class="stat-card secondary">
+            <div class="stat-card-header">
+              <div class="stat-icon secondary"><i class="fa-solid fa-handshake"></i></div>
+              <span class="stat-trend up"><i class="fa-solid fa-arrow-up"></i> <span id="traders-trend">—</span></span>
+            </div>
+            <div class="stat-value" id="stat-traders">—</div>
+            <div class="stat-label">Total Traders</div>
+          </div>
+          <div class="stat-card accent">
+            <div class="stat-card-header">
+              <div class="stat-icon accent"><i class="fa-solid fa-seedling"></i></div>
+              <span class="stat-trend up"><i class="fa-solid fa-arrow-up"></i> <span id="production-trend">—</span></span>
+            </div>
+            <div class="stat-value" id="stat-production">—</div>
+            <div class="stat-label">Total Production (kg)</div>
+          </div>
+          <div class="stat-card info">
+            <div class="stat-card-header">
+              <div class="stat-icon info"><i class="fa-solid fa-boxes-stacked"></i></div>
+              <span class="stat-trend" id="inventory-trend-badge"><i class="fa-solid fa-minus"></i> —</span>
+            </div>
+            <div class="stat-value" id="stat-inventory">—</div>
+            <div class="stat-label">Inventory Items</div>
+          </div>
+        </div>
+
+        <!-- Charts row 1 -->
+        <div class="charts-grid">
+          <div class="chart-card full">
+            <div class="chart-header"><div><h3>Monthly Production Overview</h3><p>Production volume over the last 12 months</p></div></div>
+            <div class="chart-canvas-wrap tall"><canvas id="chart-production"></canvas></div>
+          </div>
+        </div>
+
+        <!-- Charts row 2 + activity -->
+        <div class="dashboard-grid">
+          <div class="chart-card">
+            <div class="chart-header"><div><h3>Inventory Distribution</h3><p>Stock by seaweed type</p></div></div>
+            <div class="chart-canvas-wrap"><canvas id="chart-inventory"></canvas></div>
+          </div>
+          <div class="chart-card">
+            <div class="chart-header"><div><h3>Sales Overview</h3><p>Monthly sales revenue</p></div></div>
+            <div class="chart-canvas-wrap"><canvas id="chart-sales"></canvas></div>
+          </div>
+        </div>
+
+        <!-- Charts row 3 -->
+        <div class="dashboard-grid">
+          <div class="chart-card">
+            <div class="chart-header"><div><h3>Farmer Statistics</h3><p>Farmers by region</p></div></div>
+            <div class="chart-canvas-wrap"><canvas id="chart-farmers"></canvas></div>
+          </div>
+          <div class="card">
+            <div class="card-header"><h3 class="card-title">Recent Activities</h3></div>
+            <div class="card-body" id="recent-activities"><div class="spinner-center"><span class="spinner spinner-lg"></span></div></div>
+          </div>
+        </div>
+
+        <!-- Quick actions + inventory status -->
+        <div class="dashboard-grid">
+          <div class="card">
+            <div class="card-header"><h3 class="card-title">Quick Actions</h3></div>
+            <div class="card-body">
+              <div class="quick-actions">
+                <a href="farmers.html" class="quick-action"><i class="fa-solid fa-user-plus"></i><span>Add Farmer</span></a>
+                <a href="production.html" class="quick-action"><i class="fa-solid fa-plus"></i><span>Record Production</span></a>
+                <a href="inventory.html" class="quick-action"><i class="fa-solid fa-box"></i><span>Add Inventory</span></a>
+                <a href="market.html" class="quick-action"><i class="fa-solid fa-tag"></i><span>Update Price</span></a>
+                <a href="traders.html" class="quick-action"><i class="fa-solid fa-handshake"></i><span>Add Trader</span></a>
+                <a href="reports.html" class="quick-action"><i class="fa-solid fa-file-export"></i><span>Export Report</span></a>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><h3 class="card-title">Inventory Status</h3><a href="inventory.html" class="btn btn-ghost btn-sm">View all</a></div>
+            <div class="card-body" id="inventory-status"><div class="spinner-center"><span class="spinner spinner-lg"></span></div></div>
+          </div>
+        </div>
+      </main>
+    </div>
+    <script type="module" src="./js/app.js"></script>
+    <script type="module" src="./js/dashboard.js"></script>
+  </body>
+</html>

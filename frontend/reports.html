@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Seaweed MS — Reports</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%8A%3C/text%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link rel="stylesheet" href="./css/styles.css" />
+    <link rel="stylesheet" href="./css/dashboard.css" />
+    <link rel="stylesheet" href="./css/responsive.css" />
+  </head>
+  <body>
+    <div class="app-content">
+      <main class="page-content">
+        <div class="page-header">
+          <div><h1>Reports</h1><p>Generate, filter, and export comprehensive reports</p></div>
+          <div class="page-header-actions">
+            <button class="btn btn-ghost" id="print-btn"><i class="fa-solid fa-print"></i> Print</button>
+            <button class="btn btn-primary" id="export-btn"><i class="fa-solid fa-file-export"></i> Export CSV</button>
+          </div>
+        </div>
+
+        <!-- Report filters -->
+        <div class="card mb-6 no-print">
+          <div class="card-body">
+            <div class="filter-bar">
+              <select class="filter-select" id="report-type" aria-label="Report type">
+                <option value="summary">Summary Report</option>
+                <option value="production">Production Report</option>
+                <option value="inventory">Inventory Report</option>
+                <option value="market">Market Report</option>
+                <option value="farmers">Farmers Report</option>
+                <option value="traders">Traders Report</option>
+              </select>
+              <input type="date" class="filter-select" id="date-from" aria-label="From date" />
+              <input type="date" class="filter-select" id="date-to" aria-label="To date" />
+              <button class="btn btn-primary" id="generate-btn"><i class="fa-solid fa-play"></i> Generate</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Report stats -->
+        <div class="stats-grid" id="report-stats"></div>
+
+        <!-- Report content -->
+        <div id="report-content">
+          <div class="card">
+            <div class="card-header"><h3 class="card-title" id="report-title">Summary Report</h3><span class="text-light" id="report-period"></span></div>
+            <div class="card-body" id="report-body"><div class="empty-state"><i class="fa-solid fa-file-chart-column"></i><p>Click "Generate" to build the report</p></div></div>
+          </div>
+        </div>
+      </main>
+    </div>
+    <script type="module" src="./js/app.js"></script>
+    <script type="module" src="./js/reports.js"></script>
+  </body>
+</html>

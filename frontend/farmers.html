@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Seaweed MS — Farmers</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%8A%3C/text%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link rel="stylesheet" href="./css/styles.css" />
+    <link rel="stylesheet" href="./css/dashboard.css" />
+    <link rel="stylesheet" href="./css/responsive.css" />
+  </head>
+  <body>
+    <div class="app-content">
+      <main class="page-content">
+        <div class="page-header">
+          <div><h1>Farmers</h1><p>Manage farmer profiles and records</p></div>
+          <div class="page-header-actions">
+            <button class="btn btn-primary" id="add-farmer-btn"><i class="fa-solid fa-user-plus"></i> Add Farmer</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body" style="padding-bottom:0">
+            <div class="filter-bar">
+              <div class="search-box"><i class="fa-solid fa-magnifying-glass"></i><input type="search" id="search-input" placeholder="Search farmers by name, phone, region…" aria-label="Search farmers" /></div>
+              <select class="filter-select" id="region-filter" aria-label="Filter by region"><option value="">All Regions</option></select>
+              <select class="filter-select" id="status-filter" aria-label="Filter by status"><option value="">All Status</option><option value="active">Active</option><option value="inactive">Inactive</option></select>
+              <button class="btn btn-ghost btn-sm" id="clear-filters"><i class="fa-solid fa-xmark"></i> Clear</button>
+            </div>
+          </div>
+          <div class="table-wrapper" id="farmers-table"><div class="spinner-center"><span class="spinner spinner-lg"></span></div></div>
+          <div class="pagination-wrapper" id="pagination"></div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Add/Edit Farmer Modal -->
+    <div class="modal-overlay" id="farmer-modal" aria-hidden="true">
+      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="farmer-modal-title">
+        <div class="modal-header"><h3 class="modal-title" id="farmer-modal-title">Add Farmer</h3><button class="modal-close" data-close="farmer-modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button></div>
+        <form id="farmer-form"><div class="modal-body">
+          <input type="hidden" id="farmer-id" />
+          <div class="form-row">
+            <div class="form-group"><label class="form-label" for="farmer-name">Full Name <span class="req">*</span></label><input type="text" id="farmer-name" required /></div>
+            <div class="form-group"><label class="form-label" for="farmer-phone">Phone <span class="req">*</span></label><input type="text" id="farmer-phone" required /></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label class="form-label" for="farmer-email">Email</label><input type="email" id="farmer-email" /></div>
+            <div class="form-group"><label class="form-label" for="farmer-region">Region <span class="req">*</span></label><input type="text" id="farmer-region" required /></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label class="form-label" for="farmer-farm-size">Farm Size (acres)</label><input type="number" id="farmer-farm-size" step="0.1" min="0" /></div>
+            <div class="form-group"><label class="form-label" for="farmer-status">Status</label><select id="farmer-status"><option value="active">Active</option><option value="inactive">Inactive</option></select></div>
+          </div>
+          <div class="form-group"><label class="form-label" for="farmer-address">Address</label><textarea id="farmer-address" rows="2"></textarea></div>
+        </div>
+        <div class="modal-footer"><button type="button" class="btn btn-ghost" data-close="farmer-modal">Cancel</button><button type="submit" class="btn btn-primary" id="farmer-save-btn"><i class="fa-solid fa-save"></i> Save</button></div>
+        </form>
+      </div>
+    </div>
+
+    <!-- View Farmer Profile Modal -->
+    <div class="modal-overlay" id="farmer-profile-modal" aria-hidden="true">
+      <div class="modal modal-large" role="dialog" aria-modal="true" aria-labelledby="profile-title">
+        <div class="modal-header"><h3 class="modal-title" id="profile-title">Farmer Profile</h3><button class="modal-close" data-close="farmer-profile-modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button></div>
+        <div class="modal-body" id="farmer-profile-body"></div>
+      </div>
+    </div>
+
+    <script type="module" src="./js/app.js"></script>
+    <script type="module" src="./js/farmers.js"></script>
+  </body>
+</html>

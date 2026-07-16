@@ -1,0 +1,39 @@
+<!-- components/sidebar.html — Reusable sidebar component (injected dynamically by auth.js).
+     This file documents the sidebar structure for reference. The actual sidebar is
+     generated at runtime by js/auth.js injectLayout(), with navigation links filtered
+     by the current user's role (RBAC).
+
+     RBAC rules:
+       Admin   — sees all links, including Administration (Reports, User Management)
+       Manager — sees operational links + Reports (no User Management)
+       Staff   — sees operational links only (Dashboard, Farmers, Production, Inventory,
+                 Market, Traders). No Reports, no User Management.
+-->
+<!--
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-logo">
+      <i class="fa-solid fa-water"></i>
+      <span class="logo-text">Seaweed<span class="logo-accent">MS</span></span>
+    </div>
+    <button class="sidebar-close" id="sidebar-close"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+  <nav class="sidebar-nav">
+    <!-- Operational (admin, manager, staff) -->
+    <a href="dashboard.html" class="nav-item active"><i class="fa-solid fa-gauge-high"></i><span>Dashboard</span></a>
+    <a href="farmers.html" class="nav-item"><i class="fa-solid fa-tractor"></i><span>Farmers</span></a>
+    <a href="production.html" class="nav-item"><i class="fa-solid fa-seedling"></i><span>Production</span></a>
+    <a href="inventory.html" class="nav-item"><i class="fa-solid fa-boxes-stacked"></i><span>Inventory</span></a>
+    <a href="market.html" class="nav-item"><i class="fa-solid fa-store"></i><span>Market</span></a>
+    <a href="traders.html" class="nav-item"><i class="fa-solid fa-handshake"></i><span>Traders</span></a>
+
+    <!-- Administration (admin, manager for reports; admin-only for user mgmt) -->
+    <div class="nav-section-label">Administration</div>
+    <a href="reports.html" class="nav-item"><i class="fa-solid fa-chart-pie"></i><span>Reports</span></a>
+    <a href="admin-users.html" class="nav-item"><i class="fa-solid fa-users-gear"></i><span>User Management</span></a>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="sidebar-version">v1.0.0 · Administrator</div>
+  </div>
+</aside>
+-->

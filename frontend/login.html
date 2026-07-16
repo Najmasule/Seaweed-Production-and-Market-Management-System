@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Seaweed MS — Sign In &amp; Register</title>
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%8A%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="./css/styles.css" />
+  <style>
+    /* Login page specific styles */
+    .login-page {
+      min-height: 100vh;
+      display: flex;
+    }
+
+    .login-visual {
+      flex: 1;
+      background: linear-gradient(135deg, #0F172A 0%, #0F766E 50%, #115E59 100%);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 48px;
+      overflow: hidden;
+    }
+
+    .login-visual::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .login-visual::after {
+      content: '';
+      position: absolute;
+      bottom: -30%;
+      left: -10%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(13, 148, 136, 0.12) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .login-brand {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #fff;
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 48px;
+    }
+
+    .login-brand i {
+      font-size: 28px;
+      color: #34D399;
+    }
+
+    .login-hero {
+      position: relative;
+      z-index: 2;
+      color: #fff;
+      max-width: 440px;
+    }
+
+    .login-hero h1 {
+      font-size: 36px;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+
+    .login-hero p {
+      font-size: 16px;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 32px;
+    }
+
+    .login-features {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .login-feature {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 15px;
+    }
+
+    .login-feature i {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #34D399;
+      font-size: 16px;
+    }
+
+    .login-form-side {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 24px;
+      background: var(--bg);
+    }
+
+    .login-card {
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .login-card h2 {
+      font-size: 26px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .login-card .subtitle {
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+      font-size: 15px;
+    }
+
+    .login-field {
+      position: relative;
+      margin-bottom: 18px;
+    }
+
+    .login-field i {
+      position: absolute;
+      left: 16px;
+      top: 44px;
+      color: var(--text-light);
+      font-size: 15px;
+    }
+
+    .login-field input,
+    .login-field select {
+      padding-left: 44px;
+      height: 48px;
+      font-size: 15px;
+      width: 100%;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--text);
+    }
+
+    .login-field input:focus,
+    .login-field select:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .login-field label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      font-size: 14px;
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: 16px;
+      top: 42px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--text-light);
+      font-size: 15px;
+    }
+
+    .login-submit {
+      width: 100%;
+      height: 48px;
+      font-size: 15px;
+      margin-top: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .login-error {
+      background: var(--error-bg);
+      border: 1px solid #FCA5A5;
+      border-radius: var(--radius);
+      padding: 12px 16px;
+      margin-bottom: 20px;
+      display: none;
+      align-items: center;
+      gap: 10px;
+      color: var(--error);
+      font-size: 14px;
+    }
+
+    .login-error.show {
+      display: flex;
+    }
+
+    /* Toggle links style */
+    .form-toggle-text {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .form-toggle-text a {
+      color: #0F766E;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .form-toggle-text a:hover {
+      text-decoration: underline;
+    }
+
+    /* Hidden elements by default */
+    .hidden {
+      display: none !important;
+    }
+
+    @media (max-width: 900px) {
+      .login-visual {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="login-page">
+    <!-- Left Side (Visuals) -->
+    <div class="login-visual">
+      <div class="login-brand"><i class="fa-solid fa-water"></i><span>Seaweed<span
+            style="color:#34D399">MS</span></span></div>
+      <div class="login-hero">
+        <h1>Seaweed Production &amp; Market Management</h1>
+        <p>A complete platform to manage farmers, track production, monitor inventory, and analyze market trends — all
+          in one elegant dashboard.</p>
+      </div>
+      <div class="login-features">
+        <div class="login-feature"><i class="fa-solid fa-tractor"></i> Manage farmers and production records</div>
+        <div class="login-feature"><i class="fa-solid fa-boxes-stacked"></i> Real-time inventory tracking</div>
+        <div class="login-feature"><i class="fa-solid fa-chart-line"></i> Market prices and sales analytics</div>
+      </div>
+    </div>
+
+    <!-- Right Side (Forms) -->
+    <div class="login-form-side">
+      <div class="login-card">
+        <!-- Dynamic Error Alert -->
+        <div class="login-error" id="login-error">
+          <i class="fa-solid fa-circle-exclamation"></i>
+          <span id="login-error-msg"></span>
+        </div>
+
+        <!-- ==================== SIGN IN FORM ==================== -->
+        <div id="login-section">
+          <h2>Welcome back</h2>
+          <p class="subtitle">Sign in to your account to continue</p>
+          <form id="login-form" novalidate>
+            <div class="login-field">
+              <label for="username">Username</label>
+              <input type="text" id="username" name="username" placeholder="Enter your username" required
+                autocomplete="username" autofocus />
+              <i class="fa-solid fa-user"></i>
+            </div>
+            <div class="login-field">
+              <label for="password">Password</label>
+              <input type="password" id="password" name="password" placeholder="Enter your password" required
+                autocomplete="current-password" />
+              <i class="fa-solid fa-lock"></i>
+              <button type="button" class="password-toggle" id="password-toggle"
+                aria-label="Toggle password visibility"><i class="fa-solid fa-eye"></i></button>
+            </div>
+            <button type="submit" class="btn btn-primary login-submit" id="login-btn">
+              <span id="login-btn-text"><i class="fa-solid fa-right-to-bracket"></i> Sign In</span>
+            </button>
+          </form>
+          <p class="form-toggle-text">Don't have an account? <a id="go-to-register">Register here</a></p>
+        </div>
+
+        <!-- ==================== REGISTER FORM ==================== -->
+        <div id="register-section" class="hidden">
+          <h2>Create Account</h2>
+          <p class="subtitle">Register as a seaweed farmer or trader</p>
+          <form id="register-form" novalidate>
+            <div class="login-field">
+              <label for="reg-username">Username</label>
+              <input type="text" id="reg-username" name="username" placeholder="Choose a username" required />
+              <i class="fa-solid fa-user-plus"></i>
+            </div>
+            <div class="login-field">
+              <label for="reg-email">Email Address</label>
+              <input type="email" id="reg-email" name="email" placeholder="Enter your email address" required />
+              <i class="fa-solid fa-envelope"></i>
+            </div>
+            <div class="login-field">
+              <label for="reg-password">Password</label>
+              <input type="password" id="reg-password" name="password" placeholder="Create a strong password"
+                required />
+              <i class="fa-solid fa-lock"></i>
+            </div>
+            <div class="login-field">
+              <label for="reg-role">Account Type</label>
+              <select id="reg-role" name="role" required style="padding-left: 44px;">
+                <option value="farmer">Farmer (Seaweed Producer)</option>
+                <option value="trader">Trader (Buyer / Market Partner)</option>
+              </select>
+              <i class="fa-solid fa-users-gear"></i>
+            </div>
+            <button type="submit" class="btn btn-primary login-submit" id="register-btn">
+              <span id="register-btn-text"><i class="fa-solid fa-user-check"></i> Register Now</span>
+            </button>
+          </form>
+          <p class="form-toggle-text">Already have an account? <a id="go-to-login">Sign In here</a></p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripting for Toggles and API Submissions -->
+  <script>
+    // 1. Toggle Forms Logic
+    const loginSection = document.getElementById('login-section');
+    const registerSection = document.getElementById('register-section');
+    const goToRegisterBtn = document.getElementById('go-to-register');
+    const goToLoginBtn = document.getElementById('go-to-login');
+    const errorDiv = document.getElementById('login-error');
+    const errorMsg = document.getElementById('login-error-msg');
+
+    goToRegisterBtn.addEventListener('click', () => {
+      loginSection.classList.add('hidden');
+      registerSection.classList.remove('hidden');
+      errorDiv.classList.remove('show'); // Clear previous errors
+    });
+
+    goToLoginBtn.addEventListener('click', () => {
+      registerSection.classList.add('hidden');
+      loginSection.classList.remove('hidden');
+      errorDiv.classList.remove('show');
+    });
+
+    // 2. Toggle Password Visibility
+    const passField = document.getElementById('password');
+    const passToggle = document.getElementById('password-toggle');
+    passToggle.addEventListener('click', () => {
+      const type = passField.getAttribute('type') === 'password' ? 'text' : 'password';
+      passField.setAttribute('type', type);
+      passToggle.querySelector('i').classList.toggle('fa-eye');
+      passToggle.querySelector('i').classList.toggle('fa-eye-slash');
+    });
+
+    // 3. Register Form Submit Integration
+    const registerForm = document.getElementById('register-form');
+    const registerBtnText = document.getElementById('register-btn-text');
+
+    registerForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      errorDiv.classList.remove('show');
+
+      const username = document.getElementById('reg-username').value.trim();
+      const email = document.getElementById('reg-email').value.trim();
+      const password = document.getElementById('reg-password').value;
+      const role = document.getElementById('reg-role').value;
+
+      if (!username || !email || !password || !role) {
+        showError("Please fill out all required fields!");
+        return;
+      }
+
+      registerBtnText.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Creating account...';
+
+      try {
+        const response = await fetch('http://127.0.0.1:8000/api/farmers/register/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ username, email, password, role })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          alert("Account created successfully! You can now log in.");
+          registerForm.reset();
+          goToLoginBtn.click(); // Redirect back to sign-in instantly
+        } else {
+          // Unpack nested backend validations properly
+          let errors = [];
+          for (const key in data) {
+            let message = data[key];
+            if (Array.isArray(message)) {
+              message = message.join(', ');
+            } else if (typeof message === 'object') {
+              message = JSON.stringify(message);
+            }
+            errors.push(`<strong>${key}:</strong> ${message}`);
+          }
+          showError(errors.join('<br>'));
+        }
+      } catch (err) {
+        showError("Could not connect to the backend server. Make sure your Django server is running!");
+      } finally {
+        registerBtnText.innerHTML = '<i class="fa-solid fa-user-check"></i> Register Now';
+      }
+    });
+
+    function showError(message) {
+      errorMsg.innerHTML = message;
+      errorDiv.classList.add('show');
+    }
+  </script>
+  <script type="module" src="./js/login.js"></script>
+</body>
+
+</html>

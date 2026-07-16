@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 """
 Django settings for seaweed_system project.
 """
@@ -24,12 +25,28 @@ SERVICE_APPS = {
 }
 
 BASE_APPS = [
+=======
+import os
+from pathlib import Path
+
+# Paths za mradi
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Security settings (Zibadilishe wakati wa kwenda production)
+SECRET_KEY = 'django-insecure-your-secret-key-here'
+DEBUG = True
+ALLOWED_HOSTS = ['*']
+
+# Applications zilizosakinishwa
+INSTALLED_APPS = [
+>>>>>>> 36422b4 (Initial commit for main branch)
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+<<<<<<< HEAD
     'rest_framework',
     'rest_framework_simplejwt',
 ]
@@ -66,6 +83,20 @@ SIMPLE_JWT = {
 }
 
 MIDDLEWARE = [
+=======
+    
+    # Packaged zilizoongezwa
+    'rest_framework',
+    'corsheaders',  # Hii inaruhusu mawasiliano ya Frontend na Backend
+    
+    # App yako ya wakulima
+    'farmers', 
+]
+
+# Middlewares (Mpangilio ni muhimu sana hapa)
+MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',  # Lazima iwe juu kabisa kabla ya CommonMiddleware
+>>>>>>> 36422b4 (Initial commit for main branch)
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -75,7 +106,11 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+<<<<<<< HEAD
 ROOT_URLCONF = f'seaweed_system.service_urls.{SERVICE_NAME}'
+=======
+ROOT_URLCONF = 'seaweed_system.urls'  # Badilisha 'backend' kulingana na jina la folder lako kuu kama ni tofauti
+>>>>>>> 36422b4 (Initial commit for main branch)
 
 TEMPLATES = [
     {
@@ -84,6 +119,10 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+<<<<<<< HEAD
+=======
+                'django.template.context_processors.debug',
+>>>>>>> 36422b4 (Initial commit for main branch)
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
@@ -94,6 +133,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'seaweed_system.wsgi.application'
 
+<<<<<<< HEAD
 # Databases
 DATABASES = {
     "default": {
@@ -148,6 +188,21 @@ DATABASES = {
 
 DATABASE_ROUTERS = ['seaweed_system.routers.MicroserviceDatabaseRouter']
 
+=======
+# Database configuration (SQLite kwa sasa)
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'seaweed_db',          # Jina la database uliyotengeneza Postgres
+        'USER': 'postgres',            # Username ya Postgres (kawaida ni postgres)
+        'PASSWORD': '12345',   # Password uliyoweka wakati unainstall Postgres
+        'HOST': 'localhost',           # Njia ya kompyuta yako
+        'PORT': '5432',                # Port ya Postgres (kawaida ni 5432)
+    }
+}
+
+# Password validation
+>>>>>>> 36422b4 (Initial commit for main branch)
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
@@ -155,9 +210,30 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
+<<<<<<< HEAD
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = 'static/'
+=======
+# Lugha na Saa
+LANGUAGE_CODE = 'en-us'
+TIME_ZONE = 'Africa/Nairobi'
+USE_I18N = True
+USE_TZ = True
+
+# Static files
+STATIC_URL = 'static/'
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# --- MIPANGILIO YA CORS (HAPA NDIPO PANAPORUHUSU FRONTEND YAKO) ---
+CORS_ALLOW_ALL_ORIGINS = True  # Inaruhusu Frontend yoyote kuwasiliana na API yako wakati wa utengenezaji
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
+>>>>>>> 36422b4 (Initial commit for main branch)

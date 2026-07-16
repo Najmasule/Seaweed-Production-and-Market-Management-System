@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Seaweed MS — Production</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%8A%3C/text%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link rel="stylesheet" href="./css/styles.css" />
+    <link rel="stylesheet" href="./css/dashboard.css" />
+    <link rel="stylesheet" href="./css/responsive.css" />
+  </head>
+  <body>
+    <div class="app-content">
+      <main class="page-content">
+        <div class="page-header">
+          <div><h1>Production</h1><p>Track production records and statistics</p></div>
+          <div class="page-header-actions">
+            <button class="btn btn-primary" id="add-production-btn"><i class="fa-solid fa-plus"></i> Record Production</button>
+          </div>
+        </div>
+
+        <!-- Production stats -->
+        <div class="stats-grid" id="prod-stats"></div>
+
+        <!-- Tabs -->
+        <div class="tabs">
+          <button class="tab active" data-tab="records">Production Records</button>
+          <button class="tab" data-tab="history">Production History</button>
+          <button class="tab" data-tab="statistics">Statistics</button>
+        </div>
+
+        <!-- Records tab -->
+        <div class="tab-panel" id="tab-records">
+          <div class="card">
+            <div class="card-body" style="padding-bottom:0">
+              <div class="filter-bar">
+                <div class="search-box"><i class="fa-solid fa-magnifying-glass"></i><input type="search" id="search-input" placeholder="Search production records…" aria-label="Search" /></div>
+                <input type="date" class="filter-select" id="date-from" aria-label="From date" />
+                <input type="date" class="filter-select" id="date-to" aria-label="To date" />
+                <select class="filter-select" id="type-filter" aria-label="Filter by type"><option value="">All Types</option></select>
+                <button class="btn btn-ghost btn-sm" id="clear-filters"><i class="fa-solid fa-xmark"></i> Clear</button>
+              </div>
+            </div>
+            <div class="table-wrapper" id="production-table"><div class="spinner-center"><span class="spinner spinner-lg"></span></div></div>
+            <div class="pagination-wrapper" id="pagination"></div>
+          </div>
+        </div>
+
+        <!-- History tab -->
+        <div class="tab-panel hidden" id="tab-history">
+          <div class="card"><div class="card-body" id="history-body"></div></div>
+        </div>
+
+        <!-- Statistics tab -->
+        <div class="tab-panel hidden" id="tab-statistics">
+          <div class="charts-grid">
+            <div class="chart-card"><div class="chart-header"><div><h3>Production by Month</h3><p>Monthly production volume</p></div></div><div class="chart-canvas-wrap"><canvas id="stat-monthly"></canvas></div></div>
+            <div class="chart-card"><div class="chart-header"><div><h3>Production by Type</h3><p>Distribution by seaweed type</p></div></div><div class="chart-canvas-wrap"><canvas id="stat-by-type"></canvas></div></div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Add/Edit Production Modal -->
+    <div class="modal-overlay" id="production-modal" aria-hidden="true">
+      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="prod-modal-title">
+        <div class="modal-header"><h3 class="modal-title" id="prod-modal-title">Record Production</h3><button class="modal-close" data-close="production-modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button></div>
+        <form id="production-form"><div class="modal-body">
+          <input type="hidden" id="prod-id" />
+          <div class="form-row">
+            <div class="form-group"><label class="form-label" for="prod-farmer">Farmer <span class="req">*</span></label><select id="prod-farmer" required></select></div>
+            <div class="form-group"><label class="form-label" for="prod-type">Seaweed Type <span class="req">*</span></label><input type="text" id="prod-type" required placeholder="e.g. Kappaphycus, Eucheuma" /></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label class="form-label" for="prod-quantity">Quantity (kg) <span class="req">*</span></label><input type="number" id="prod-quantity" step="0.1" min="0" required /></div>
+            <div class="form-group"><label class="form-label" for="prod-date">Production Date <span class="req">*</span></label><input type="date" id="prod-date" required /></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label class="form-label" for="prod-quality">Quality Grade</label><select id="prod-quality"><option value="A">Grade A — Premium</option><option value="B">Grade B — Standard</option><option value="C">Grade C — Lower</option></select></div>
+            <div class="form-group"><label class="form-label" for="prod-status">Status</label><select id="prod-status"><option value="completed">Completed</option><option value="in_progress">In Progress</option><option value="planned">Planned</option></select></div>
+          </div>
+          <div class="form-group"><label class="form-label" for="prod-notes">Notes</label><textarea id="prod-notes" rows="2"></textarea></div>
+        </div>
+        <div class="modal-footer"><button type="button" class="btn btn-ghost" data-close="production-modal">Cancel</button><button type="submit" class="btn btn-primary" id="prod-save-btn"><i class="fa-solid fa-save"></i> Save</button></div>
+        </form>
+      </div>
+    </div>
+
+    <script type="module" src="./js/app.js"></script>
+    <script type="module" src="./js/production.js"></script>
+  </body>
+</html>
